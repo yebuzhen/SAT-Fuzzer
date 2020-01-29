@@ -20,7 +20,7 @@ def execute():
     args = ParseArgs()
     NUM_TS = 20
     ubts_buffer = []
-    os.makedirs(args.SUT_path+"/fuzzed-tests", exist_ok=True)
+    os.mkdir(args.SUT_path+"/fuzzed-tests")
 
     for i in range(NUM_TS):
         print("iteration{}".format(i))

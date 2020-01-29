@@ -8,7 +8,7 @@ def modify_file(filename, sut_path):
 
     with open(filename, 'r') as file:
         data = file.readlines()
-        mark = random.randint(0, 2)
+        mark = random.randint(0, 1)
         if mark == 0:
             data[0] = first_line_mutation(data[0])
         else:
@@ -22,7 +22,7 @@ def modify_file(filename, sut_path):
 def generate_mutation(line):
     print("Mutating a random line")
     digits = line.split(' ')
-    mark = random.randint(0, 2)
+    mark = random.randint(0, 1)
     for i in range(len(digits)):
         if mark == 0:
             digits[i] += '000000000000000000'
@@ -34,10 +34,8 @@ def generate_mutation(line):
 def first_line_mutation(line):
     print("Mutating the first line")
     digits = line.split(' ')
-    mark = random.randint(0, 4)
-    if mark == 0:
-        digits[0] = 'z'
-    elif mark == 1:
+    mark = random.randint(1, 3)
+    if mark == 1:
         digits[1] = 'z'
     elif mark == 2:
         digits[2] = sys.maxsize
