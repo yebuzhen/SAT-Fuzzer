@@ -25,5 +25,5 @@ def ub_number_mutation(filename):
     path.write_text(text)
 
 
-def genrate_mutation(line):
+def generate_mutation(line):
     return ''
