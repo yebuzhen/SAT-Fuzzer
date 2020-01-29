@@ -1,6 +1,6 @@
 # mutate the first line
 import random
-from pathlib2 import Path
+import sys
 
 # Read and edit a file
 def modify_file(filename):
@@ -8,36 +8,44 @@ def modify_file(filename):
 
     with open(filename, 'r') as file:
         data = file.readlines()
-
-        for i in range(10):
-            line = random.randint(1, len(data))
-            data[line] = genrate_mutation(data[line])
+        mark = random.randint(0, 2)
+        if mark == 0:
+            data[0] = first_line_mutation(data[0])
+        else:
+            for i in range(10):
+                line = random.randint(1, len(data))
+                data[line] = generate_mutation(data[line])
     
     with open(filename, 'w') as file:
         file.writelines(data)
 
-
-
-# generate valid cnf input
-
-def generate_valid_cnf():
-    cnf = ''
-
-    return cnf
-
-
-# generate invalid cnf input
-def generate_invalid_cnf():
-    cnf = ''
-    return cnf
-
-
-def ub_number_mutation(filename):
-    path = Path(filename)
-    text = path.read_text()
-    text = text.replace('1', '2')
-    path.write_text(text)
-
-
 def generate_mutation(line):
-    return ''
+    digits = line.split(' ')
+    mark = random.randint(0, 2)
+    for i in range(len(digits)):
+        if mark == 0:
+            digits[i] += '0000000000'
+        elif mark == 1:
+            digits[i] += 'a'
+    return combine(digits)
+
+
+def first_line_mutation(line):
+    digits = line.split(' ')
+    mark = random.randint(0, 4)
+    if mark == 0:
+        digits[0] = 'z'
+    elif mark == 1:
+        digits[1] = 'z'
+    elif mark == 2:
+        digits[2] = sys.maxsize
+    elif mark == 3:
+        digits[3] = sys.maxsize
+    return combine(digits)
+
+
+def combine(digits):
+    line = ''
+    for digit in digits:
+        line += str(digit) + ' '
+    return line[0 : len(line) - 1]
