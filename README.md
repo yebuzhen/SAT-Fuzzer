@@ -1,2 +1,6 @@
 # SAT-Fuzzer
-CW
+
+Imperial College London
+
+Software Reliability Coursework 1:
+Implement a SAT fuzzer
