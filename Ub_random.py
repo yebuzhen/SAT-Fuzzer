@@ -3,7 +3,7 @@ import string
 import random
 import argparse
 
-def StringGenerator(length):
+def RandomStringGenerator(length):
     res = ''.join(random.choices(string.ascii_uppercase + string.digits, k = length))
     return res
 
@@ -11,15 +11,23 @@ def ParseArgs():
     parser = argparse.ArgumentParser()
     parser.add_argument("SUT_path",  type=str,
         help="Path to binary containing the system under test.")
-    parser.add_argument("inputs_path", type=str,
+    parser.add_argument("Inputs_path", type=str,
         help="Path to folder containing input DIMACS-format tests.")
     return parser.parse_args()
 
-if __name__ == "__main__":
+def execute():
     args = ParseArgs()
+    NUM_TS = 20
+    ubts_buffer = []
+    os.makedirs(args.SUT_path+"/fuzzed-tests", exist_ok=True)
 
-    f = open("test.cnf", "w+")
-    f.write(StringGenerator(10))
-    f.close
+    for i in range(NUM_TS):
+        cur_input = RandomStringGenerator(10)
+        f = open(args.SUT_path+"/tmp.cnf", "w+")
+        f.write(cur_input)
+        f.close
+        os.system(args.SUT_path + "/runsat.sh " + args.Inputs_path +
+                  "/bench_13462.smt2.cnf " + "> " + args.SUT_path + "/fuzzed-tests/test_log{} 2>&1".format(i))
 
-    os.system(args.SUT_path + "/runsat.sh " + args.inputs_path + "/test.cnf " + "> result.txt 2>&1")
+if __name__ == "__main__":
+    execute()
