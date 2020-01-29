@@ -1,4 +1,4 @@
-import subprocess
+import os
 import string
 import random
 import argparse
@@ -22,4 +22,4 @@ if __name__ == "__main__":
     f.write(StringGenerator(10))
     f.close
 
-    subprocess.run(["./runsat.sh", "test.cnf"])
+    os.system(args.SUT_path + "/runsat.sh " + args.inputs_path + "/test.cnf " + "> result.txt 2>&1")
