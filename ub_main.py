@@ -2,6 +2,7 @@ import os
 import string
 import random
 import argparse
+from ub_generator import *
 
 def RandomStringGenerator(length):
     res = ''.join(random.choices(string.ascii_uppercase + string.digits, k = length))
@@ -22,12 +23,10 @@ def execute():
     os.makedirs(args.SUT_path+"/fuzzed-tests", exist_ok=True)
 
     for i in range(NUM_TS):
-        cur_input = RandomStringGenerator(10)
-        f = open(args.SUT_path+"/tmp.cnf", "w+")
-        f.write(cur_input)
-        f.close
-        os.system(args.SUT_path + "/runsat.sh " + args.Inputs_path +
-                  "/bench_13462.smt2.cnf " + "> " + args.SUT_path + "/fuzzed-tests/test_log{} 2>&1".format(i))
+        print("iteration{}".format(i))
+        modify_file(args.Inputs_path + "/bench_13462.smt2.cnf", args.SUT_path)
+        os.system(args.SUT_path + "/runsat.sh " + args.SUT_path +
+                  "/tmp.cnf " + "> " + args.SUT_path + "/fuzzed-tests/test_log{} 2>&1".format(i))
 
 if __name__ == "__main__":
     execute()
