@@ -2,6 +2,20 @@
 import random
 from pathlib2 import Path
 
+# Read and edit a file
+def modify_file(filename):
+    num_lines = sum(1 for line in open(filename))
+
+    with open(filename, 'r') as file:
+        data = file.readlines()
+
+        for i in range(10):
+            line = random.randint(1, len(data))
+            data[line] = genrate_mutation(data[line])
+    
+    with open(filename, 'w') as file:
+        file.writelines(data)
+
 
 
 # generate valid cnf input
