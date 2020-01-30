@@ -1,8 +1,11 @@
-def swap_between_clauses():
-    print()
+import random
 
 
-def swap_internal_clauses():
+def swap_between_clauses(data):
+    random.shuffle(data)
+
+
+def swap_internal_clauses(data):
     print()
 
 
