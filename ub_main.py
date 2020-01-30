@@ -38,8 +38,7 @@ def ParseArgs():
     return parser.parse_args()
 
 def eval_case(logfile):
-    with open(logfile, 'r') as f:
-        pass
+    pass
 
 def execute():
     args = ParseArgs()
@@ -62,13 +61,14 @@ def execute():
             task.kill()
             t_output, t_error = task.communicate()
 
-        with open(OUTPUT_PATH+"/test_log{}".format(1), 'w') as file:
-            file.writelines(t_error.decode('ascii ').split('\n'))
+        with open(OUTPUT_PATH+"/test_log{}".format(i), 'w') as f:
+            f.writelines(t_error.decode('ascii '))
         # os.system(args.SUT_path + "/runsat.sh " + args.SUT_path +
         #           "/tmp.cnf " + "> " + args.SUT_path + "/tmp.log 2>&1")
-        if eval_case(args.SUT_path + "/tmp.log"):
+
+        #if eval_case(_):
             # copyfile
-            pass
+
         # os.system(args.SUT_path + "/runsat.sh " + args.SUT_path +
         #           "/tmp.cnf " + "> " + args.SUT_path + "/fuzzed-tests/test_log{} 2>&1".format(i))
 
