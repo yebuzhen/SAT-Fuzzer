@@ -4,6 +4,23 @@ import random
 import argparse
 from ub_generator import *
 
+REGEXES = {
+    "INTMIN_NEGATED": re.compile('^.*runtime.+negation'),
+    "NULLPOINTER": re.compile('^.*runtime.+null pointer'),
+    "SHIFT_ERROR": re.compile('^.*runtime.+shift'),
+    "SIGNED_INTEGER_OVERFLOW": re.compile('^.*runtime.+signed integer')
+
+    "USE_AFTER_FREE": re.compile('^==.*AddressSanitizer: heap-use-after-free'),
+    "HEAP_BUFFER_OVERFLOW": re.compile('^==.*AddressSanitizer: heap-buffer-overflow'),
+    "STACK_BUFFER_OVERFLOW": re.compile('^==.*AddressSanitizer: stack-buffer-overflow'),
+    "GLOBAL_BUFFER_OVERFLOW": re.compile('^==.*AddressSanitizer: global-buffer-overflow'),
+    "USE_AFTER_RETURN": re.compile('^==.*AddressSanitizer: stack-use-after-return'),
+    "USE_AFTER_SCOPE": re.compile('^==.*AddressSanitizer: stack-use-after-scope'),
+    "INITIALIZATION_ORDER_BUGS": re.compile('^==.*AddressSanitizer: initialization-order-fiasco'),
+    "MEMORY_LEAKS": re.compile('^==.*LeakSanitizer: detected memory leaks')
+}
+
+
 def ParseArgs():
     parser = argparse.ArgumentParser()
     parser.add_argument("SUT_path",  type=str,
