@@ -89,13 +89,10 @@ def generate_invalid_cnf():
 
     if mark == 0:
         txt.append('p cnf 0 0')
-    elif mark == 1:
-        txt.append('p cnf 3 1')
-    elif mark == 2:
-        txt.append('p cnf 3 1')
-        txt.append('cneqljid18273192;.,*&&^%%$ 123du #$@@ujql')
-    elif mark == 3:
-        txt.append('p cnf 3 1')
-        txt.append('4 0')
-        txt.append('')
-        txt.append('cneqljid18273192;')
+    else:
+        txt.append('p cnf 2 3')
+        for i in range(0, random.randint(0, 3)):
+            line = RandomStringGenerator(random.randint(5, 10))
+            line += ' 0'
+            txt.append(line)
+    return txt
