@@ -2,6 +2,7 @@
 import random
 import sys
 
+
 # Read and edit a file
 def modify_file(filename, sut_path):
     num_lines = sum(1 for line in open(filename))
@@ -16,9 +17,11 @@ def modify_file(filename, sut_path):
                 line = random.randint(1, len(data))
                 data[line] = generate_mutation(data[line])
 
-    with open(sut_path+"/tmp.cnf", 'w') as file:
+    with open(sut_path + "/tmp.cnf", 'w') as file:
         file.writelines(data)
 
+
+# mutate data line
 def generate_mutation(line):
     print("Mutating a random line")
     digits = line.split(' ')
@@ -31,6 +34,7 @@ def generate_mutation(line):
     return combine(digits)
 
 
+# mutate first line
 def first_line_mutation(line):
     print("Mutating the first line")
     digits = line.split(' ')
@@ -44,8 +48,23 @@ def first_line_mutation(line):
     return combine(digits)
 
 
+# combine str list to str
 def combine(digits):
     line = ''
     for digit in digits:
         line += str(digit) + ' '
-    return line[0 : len(line) - 1]
+    return line[0: len(line) - 1]
+
+
+# generate cnf txt with valid format but random number between 5 - 950
+def generate_random_number_cnf():
+    txt = 'p cnf 1000 10000\n'
+    for m in range(1, 10000):
+        for n in range(1, 5):
+            mark = random.randint(0, 1)
+            if mark == 1:
+                txt += '-'
+            txt += str(random.randint(5, 950))
+            txt += ' '
+        txt += '0\n'
+    return txt
