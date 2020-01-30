@@ -1,7 +1,11 @@
 # mutate the first line
 import random
+import string
 import sys
 
+def RandomStringGenerator(length):
+    res = ''.join(random.choices(string.ascii_uppercase + string.digits, k = length))
+    return res
 
 # Read and edit a file
 def modify_file(filename, sut_path):
@@ -48,7 +52,7 @@ def first_line_mutation(line):
     elif mark == 3:
         digits[3] = sys.maxsize
     elif mark == 4:
-        res = ''.join(random.choices(string.ascii_uppercase + string.digits, k = random.randint(0,100)))
+        res = RandomStringGenerator(random.randint(0, 100))
         return res
     return combine(digits)
 
@@ -78,3 +82,20 @@ def generate_random_number_cnf():
         line += '0'
         txt.append(line)
     return txt
+
+def generate_invalid_cnf():
+    txt = []
+    mark = random.randint(0, 4)
+
+    if mark == 0:
+        txt.append('p cnf 0 0')
+    elif mark == 1:
+        txt.append('p cnf 3 1')
+    elif mark == 2:
+        txt.append('p cnf 3 1')
+        txt.append('cneqljid18273192;.,*&&^%%$ 123du #$@@ujql')
+    elif mark == 3:
+        txt.append('p cnf 3 1')
+        txt.append('4 0')
+        txt.append('')
+        txt.append('cneqljid18273192;')

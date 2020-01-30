@@ -4,10 +4,6 @@ import random
 import argparse
 from ub_generator import *
 
-def RandomStringGenerator(length):
-    res = ''.join(random.choices(string.ascii_uppercase + string.digits, k = length))
-    return res
-
 def ParseArgs():
     parser = argparse.ArgumentParser()
     parser.add_argument("SUT_path",  type=str,
