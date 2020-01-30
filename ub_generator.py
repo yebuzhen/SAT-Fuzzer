@@ -40,13 +40,16 @@ def generate_mutation(line):
 def first_line_mutation(line):
     print("Mutating the first line")
     digits = line.split(' ')
-    mark = random.randint(1, 3)
+    mark = random.randint(1, 4)
     if mark == 1:
         digits[1] = 'z'
     elif mark == 2:
         digits[2] = sys.maxsize
     elif mark == 3:
         digits[3] = sys.maxsize
+    elif mark == 4:
+        res = ''.join(random.choices(string.ascii_uppercase + string.digits, k = random.randint(0,100)))
+        return res
     return combine(digits)
 
 
