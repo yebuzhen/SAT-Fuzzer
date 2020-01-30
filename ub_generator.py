@@ -1,7 +1,6 @@
 # mutate the first line
 import random
 import sys
-import numpy
 
 
 # Read and edit a file
