@@ -1,8 +1,10 @@
 import os
+import subprocess
 import re
 import string
 import random
 import argparse
+from shutil import copyfile
 from ub_generator import create_input
 
 REGEXES = {
@@ -24,6 +26,9 @@ REGEXES = {
     "UB_ERROR": re.compile('^==.*UndefinedBehaviorSanitizer'),
 }
 
+NUM_TS = 20
+ubts_buffer = []
+
 def ParseArgs():
     parser = argparse.ArgumentParser()
     parser.add_argument("SUT_path",  type=str,
@@ -32,22 +37,38 @@ def ParseArgs():
         help="Path to folder containing input DIMACS-format tests.")
     return parser.parse_args()
 
-def eval_case():
-    pass
+def eval_case(logfile):
+    with open(logfile, 'r') as f:
+        pass
 
 def execute():
     args = ParseArgs()
-    NUM_TS = 20
-    ubts_buffer = []
+    RUN_PATH = args.SUT_path + "/runsat.sh"
+    INUPT_PATH = args.SUT_path + "/tmp.cnf"
+    OUTPUT_PATH = args.SUT_path + "/fuzzed-tests"
 
-    if not os.path.exists(args.SUT_path+"/fuzzed-tests"):
-        os.mkdir(args.SUT_path+"/fuzzed-tests")
+    if not os.path.exists(OUTPUT_PATH):
+        os.mkdir(OUTPUT_PATH)
 
-    for i in range(NUM_TS):
-        print("iteration{}".format(i))
+    for i in range(20):
+        print("Iteration{}".format(i))
         create_input(args.Inputs_path + "/bench_13462.smt2.cnf", args.SUT_path)
-        os.system(args.SUT_path + "/runsat.sh " + args.SUT_path +
-                  "/tmp.cnf " + "> " + args.SUT_path + "/tmp.log 2>&1")
+        task = subprocess.Popen([RUN_PATH, INUPT_PATH], stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                                  cwd=args.SUT_path)
+
+        try:
+            t_output, t_error = task.communicate(timeout=100)
+        except subprocess.TimeoutExpired:
+            task.kill()
+            t_output, t_error = task.communicate()
+
+        with open(OUTPUT_PATH+"/test_log{}".format(1), 'w') as file:
+            file.writelines(t_error.decode('ascii ').split('\n'))
+        # os.system(args.SUT_path + "/runsat.sh " + args.SUT_path +
+        #           "/tmp.cnf " + "> " + args.SUT_path + "/tmp.log 2>&1")
+        if eval_case(args.SUT_path + "/tmp.log"):
+            # copyfile
+            pass
         # os.system(args.SUT_path + "/runsat.sh " + args.SUT_path +
         #           "/tmp.cnf " + "> " + args.SUT_path + "/fuzzed-tests/test_log{} 2>&1".format(i))
 

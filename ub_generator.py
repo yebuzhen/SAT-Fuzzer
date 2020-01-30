@@ -18,7 +18,7 @@ def create_input(filename, sut_path):
         elif mark == 1:
             for _ in range(10):
                 line = random.randint(1, len(data))
-                data[line] = random_lines_mutation(data[line])
+                data[line] = random_line_mutation(data[line])
         else:
             data = generate_random_number_cnf()
 
@@ -27,7 +27,7 @@ def create_input(filename, sut_path):
 
 
 # mutate data line
-def random_lines_mutation(line):
+def random_line_mutation(line):
     print("Mutating a random line")
     digits = line.split(' ')
     mark = random.randint(0, 1)
@@ -66,6 +66,7 @@ def combine(digits):
 
 # generate cnf txt with valid format but random number between 5 - 950
 def generate_random_number_cnf():
+    print("Generating random cnf file")
     variable = random.randint(10,500)
     clause = random.randint(10, 1000)
     txt = ['p cnf ' + str(variable) + " " + str(clause)]
@@ -82,6 +83,7 @@ def generate_random_number_cnf():
         txt.append(line)
     return txt
 
+# currently unused
 def generate_invalid_cnf():
     txt = []
     mark = random.randint(0, 4)
