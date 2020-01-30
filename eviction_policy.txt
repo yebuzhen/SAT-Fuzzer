@@ -1,0 +1,4 @@
+1. Error not shown in the array
+2. Max unique errors in a test
+3. Max total errors in a test
+4. Number of error files 
