@@ -9,7 +9,7 @@ def modify_file(filename, sut_path):
 
     with open(filename, 'r') as file:
         data = file.readlines()
-        mark = random.randint(0, 3)
+        mark = random.randint(2, 3)
         if mark == 0:
             data[0] = first_line_mutation(data[0])
         elif mark == 1:
@@ -63,14 +63,17 @@ def combine(digits):
 
 # generate cnf txt with valid format but random number between 5 - 950
 def generate_random_number_cnf():
-    txt = ['p cnf 1000 10000']
-    for m in range(1, 10000):
+    variable = random.randint(10,50)
+    clause = random.randint(10, 100)
+    txt = ['p cnf ' + str(variable) + " " + str(clause)]
+    percent = random.uniform(0.1, 0.9)
+    for m in range(1, clause):
         line = ''
-        for n in range(1, 5):
+        for n in range(1, random.randint(1, variable)):
             mark = random.randint(0, 1)
             if mark == 1:
                 line += '-'
-            line += str(random.randint(5, 950))
+            line += str(random.randint(1, int(variable * percent)))
             line += ' '
         line += '0'
         txt.append(line)
