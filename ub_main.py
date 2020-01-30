@@ -18,6 +18,8 @@ REGEXES = {
     "USE_AFTER_SCOPE": re.compile('^==.*AddressSanitizer: stack-use-after-scope'),
     "INITIALIZATION_ORDER_BUGS": re.compile('^==.*AddressSanitizer: initialization-order-fiasco'),
     "MEMORY_LEAKS": re.compile('^==.*LeakSanitizer: detected memory leaks')
+
+    "UB_ERROR": re.compile('^==.*UndefinedBehaviorSanitizer')
 }
 
 
