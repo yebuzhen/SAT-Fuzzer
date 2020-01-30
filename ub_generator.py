@@ -10,14 +10,14 @@ def modify_file(filename, sut_path):
 
     with open(filename, 'r') as file:
         data = file.readlines()
-        mark = random.randint(0, 2)
+        mark = random.randint(0, 3)
         if mark == 0:
             data[0] = first_line_mutation(data[0])
         elif mark == 1:
             for i in range(10):
                 line = random.randint(1, len(data))
                 data[line] = generate_mutation(data[line])
-        elif mark == 2:
+        else:
             data = generate_random_number_cnf()
 
     with open(sut_path + "/tmp.cnf", 'w') as file:
