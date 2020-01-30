@@ -63,8 +63,8 @@ def combine(digits):
 
 # generate cnf txt with valid format but random number between 5 - 950
 def generate_random_number_cnf():
-    variable = random.randint(10,50)
-    clause = random.randint(10, 100)
+    variable = random.randint(10,500)
+    clause = random.randint(10, 1000)
     txt = ['p cnf ' + str(variable) + " " + str(clause)]
     percent = random.uniform(0.1, 0.9)
     for m in range(1, clause):
