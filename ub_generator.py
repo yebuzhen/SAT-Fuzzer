@@ -8,8 +8,7 @@ def RandomStringGenerator(length):
     return res
 
 # Read and edit a file
-def modify_file(filename, sut_path):
-    num_lines = sum(1 for line in open(filename))
+def create_input(filename, sut_path):
 
     with open(filename, 'r') as file:
         data = file.readlines()
@@ -17,9 +16,9 @@ def modify_file(filename, sut_path):
         if mark == 0:
             data[0] = first_line_mutation(data[0])
         elif mark == 1:
-            for i in range(10):
+            for _ in range(10):
                 line = random.randint(1, len(data))
-                data[line] = generate_mutation(data[line])
+                data[line] = random_lines_mutation(data[line])
         else:
             data = generate_random_number_cnf()
 
@@ -28,7 +27,7 @@ def modify_file(filename, sut_path):
 
 
 # mutate data line
-def generate_mutation(line):
+def random_lines_mutation(line):
     print("Mutating a random line")
     digits = line.split(' ')
     mark = random.randint(0, 1)
@@ -71,9 +70,9 @@ def generate_random_number_cnf():
     clause = random.randint(10, 1000)
     txt = ['p cnf ' + str(variable) + " " + str(clause)]
     percent = random.uniform(0.1, 0.9)
-    for m in range(1, clause):
+    for _ in range(1, clause):
         line = ''
-        for n in range(1, random.randint(1, variable)):
+        for _ in range(1, random.randint(1, variable)):
             mark = random.randint(0, 1)
             if mark == 1:
                 line += '-'
@@ -91,7 +90,7 @@ def generate_invalid_cnf():
         txt.append('p cnf 0 0')
     else:
         txt.append('p cnf 2 3')
-        for i in range(0, random.randint(0, 3)):
+        for _ in range(0, random.randint(0, 3)):
             line = RandomStringGenerator(random.randint(5, 10))
             line += ' 0'
             txt.append(line)
