@@ -3,26 +3,40 @@ import random
 import string
 import sys
 
+SPECIAL_INPUT = ["p cnf 0 0\n",
+                 "p cnf 1 1\na1! 0\n",
+                 "p cnf 1 1\n394890123456789\n",
+                 "p cnf 10 10\n1 2 -4\n",
+                 "p cnf 1 1\n1 2 3 4 5 6 0\n1 2 3 4 5 6 -7\n"]
 
-def RandomStringGenerator(length):
+
+def random_string_generator(length):
     res = ''.join(random.choices(string.ascii_uppercase + string.digits, k=length))
     return res
 
 
+# no need filename (same as create_input, you can delete it)
+def create_special_input(sut_path, index):
+    data = SPECIAL_INPUT[index]
+    with open(sut_path + "/tmp.cnf", 'w') as file:
+        file.writelines(data)
+
+
 # Read and edit a file
 def create_input(filename, sut_path):
-    with open(filename, 'r') as file:
-        data = file.readlines()
-        mark = random.randint(2, 3)
-        if mark == 0:
-            data[0] = first_line_mutation(data[0])
-        elif mark == 1:
-            for _ in range(10):
-                line = random.randint(1, len(data))
-                data[line] = random_line_mutation(data[line])
-        else:
-            data = generate_random_number_cnf()
+    # with open(filename, 'r') as file:
+    #     data = file.readlines()
+    #     mark = random.randint(2, 3)
+    #     if mark == 0:
+    #         data[0] = first_line_mutation(data[0])
+    #     elif mark == 1:
+    #         for _ in range(10):
+    #             line = random.randint(1, len(data))
+    #             data[line] = random_line_mutation(data[line])
+    #     else:
+    #     data = generate_random_number_cnf()
 
+    data = generate_random_number_cnf()
     with open(sut_path + "/tmp.cnf", 'w') as file:
         file.writelines(data)
 
@@ -52,7 +66,7 @@ def first_line_mutation(line):
     elif mark == 3:
         digits[3] = sys.maxsize
     elif mark == 4:
-        res = RandomStringGenerator(random.randint(0, 100))
+        res = random_string_generator(random.randint(0, 100))
         return res
     return combine(digits)
 
@@ -68,8 +82,8 @@ def combine(digits):
 # generate cnf txt with valid format but random number between 5 - 950
 def generate_random_number_cnf():
     print("Generating random cnf file")
-    variable = random.randint(10, 500)
-    clause = random.randint(10, 1000)
+    variable = random.randint(20, 50)
+    clause = random.randint(40, 100)
     txt = ['p cnf ' + str(variable) + " " + str(clause) + '\n']
     percent = random.uniform(0.1, 0.9)
     for _ in range(1, clause):
@@ -87,11 +101,9 @@ def generate_random_number_cnf():
 
 # currently unused
 def generate_invalid_cnf():
-    txt = []
-    mark = random.randint(0, 4)
-    txt.append('p cnf 2 3')
-    for i in range(0, random.randint(0, 3)):
-        line = RandomStringGenerator(random.randint(5, 10))
+    txt = ['p cnf 2 3']
+    for i in range(3):
+        line = random_string_generator(random.randint(5, 10))
         line += ' 0'
         txt.append(line)
     return txt
