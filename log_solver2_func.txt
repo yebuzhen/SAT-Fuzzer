@@ -1,0 +1,21 @@
+barea@ubuntu:~/Downloads/Software_Reliability/CW/code/code$ python3 satfollowup.py '/home/barea/Downloads/Software_Reliability/CW/code/code/solvers/solvers/solver2/sat' '/home/barea/Downloads/Software_Reliability/CW/SRCoursework1Tests_20/selected_small' '/home/barea/Downloads/Software_Reliability/CW/SRCoursework1Tests_20/followups'
+/home/barea/Downloads/Software_Reliability/CW/SRCoursework1Tests_20/selected_small/bench_3187.smt2.cnf: Timeout for initial test
+/home/barea/Downloads/Software_Reliability/CW/SRCoursework1Tests_20/selected_small/bench_5074.smt2.cnf: Abnormal termination for initial test (return code -9):
+b''
+/home/barea/Downloads/Software_Reliability/CW/SRCoursework1Tests_20/selected_small/bench_17289.smt2.cnf: Abnormal termination for initial test (return code -9):
+b''
+/home/barea/Downloads/Software_Reliability/CW/SRCoursework1Tests_20/selected_small/bench_379.smt2.cnf: Timeout for initial test
+/home/barea/Downloads/Software_Reliability/CW/SRCoursework1Tests_20/selected_small/bench_14388.smt2.cnf: Timeout for initial test
+/home/barea/Downloads/Software_Reliability/CW/SRCoursework1Tests_20/selected_small/bench_17600.smt2.cnf: Timeout for initial test
+/home/barea/Downloads/Software_Reliability/CW/SRCoursework1Tests_20/selected_small/bench_3477.smt2.cnf: Timeout for initial test
+/home/barea/Downloads/Software_Reliability/CW/SRCoursework1Tests_20/selected_small/bench_8871.smt2.cnf: Timeout for initial test
+/home/barea/Downloads/Software_Reliability/CW/SRCoursework1Tests_20/selected_small/bench_17509.smt2.cnf: Timeout for initial test
+/home/barea/Downloads/Software_Reliability/CW/SRCoursework1Tests_20/selected_small/bench_6695.smt2.cnf: Abnormal termination for initial test (return code -9):
+b''
+/home/barea/Downloads/Software_Reliability/CW/SRCoursework1Tests_20/selected_small/bench_15948.smt2.cnf: Timeout for initial test
+/home/barea/Downloads/Software_Reliability/CW/SRCoursework1Tests_20/selected_small/bench_6115.smt2.cnf: Timeout for initial test
+/home/barea/Downloads/Software_Reliability/CW/SRCoursework1Tests_20/selected_small/bench_8669.smt2.cnf: Timeout for initial test
+/home/barea/Downloads/Software_Reliability/CW/SRCoursework1Tests_20/selected_small/bench_14241.smt2.cnf: Timeout for initial test
+/home/barea/Downloads/Software_Reliability/CW/SRCoursework1Tests_20/selected_small/bench_14226.smt2.cnf: Timeout for initial test
+/home/barea/Downloads/Software_Reliability/CW/SRCoursework1Tests_20/selected_small/bench_764.smt2.cnf: Timeout for initial test
+Lines executed:84.89% of 589

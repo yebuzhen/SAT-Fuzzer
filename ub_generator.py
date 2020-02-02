@@ -3,8 +3,7 @@ import random
 import string
 import sys
 
-SPECIAL_INPUT = ["p cnf 0 0\n",
-                 "p cnf 1 1\na1! 0\n",
+SPECIAL_INPUT = ["p cnf 1 1\na! 0\n",
                  "p cnf 1 1\n394890123456789\n",
                  "p cnf 10 10\n1 2 -4\n",
                  "p cnf 1 1\n1 2 3 4 5 6 0\n1 2 3 4 5 6 -7\n"]
@@ -86,7 +85,7 @@ def generate_random_number_cnf():
     clause = random.randint(40, 100)
     txt = ['p cnf ' + str(variable) + " " + str(clause) + '\n']
     percent = random.uniform(0.1, 0.9)
-    for _ in range(1, clause):
+    for i in range(1, clause):
         line = ''
         for _ in range(1, random.randint(1, variable)):
             mark = random.randint(0, 1)

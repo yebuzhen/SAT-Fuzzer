@@ -1,0 +1,42 @@
+by119@texel05:code$ python3 satfollowup.py '/homes/by119/Downloads/Software Reliability/code/code/solvers/solvers/solver3/sat' '/homes/by119/Downloads/Software Reliability/SRCoursework1Tests_20/selected_small' '/homes/by119/Downloads/Software Reliability/SRCoursework1Tests_20/followup'
+/homes/by119/Downloads/Software Reliability/SRCoursework1Tests_20/selected_small/bench_8871.smt2.cnf: Abnormal termination for initial test (return code -9):
+b''
+/homes/by119/Downloads/Software Reliability/SRCoursework1Tests_20/selected_small/bench_3187.smt2.cnf: Abnormal termination for initial test (return code -9):
+b''
+/homes/by119/Downloads/Software Reliability/SRCoursework1Tests_20/followup/bench_13462.smt2_01.cnf: Abnormal termination for initial test (return code -9):
+b''
+/homes/by119/Downloads/Software Reliability/SRCoursework1Tests_20/followup/bench_13462.smt2_18.cnf: Abnormal termination for initial test (return code -11):
+b''
+/homes/by119/Downloads/Software Reliability/SRCoursework1Tests_20/followup/bench_13462.smt2_23.cnf: Abnormal termination for initial test (return code -9):
+b''
+/homes/by119/Downloads/Software Reliability/SRCoursework1Tests_20/followup/bench_13462.smt2_24.cnf: Abnormal termination for initial test (return code -9):
+b''
+/homes/by119/Downloads/Software Reliability/SRCoursework1Tests_20/followup/bench_13462.smt2_26.cnf: Abnormal termination for initial test (return code -9):
+b''
+/homes/by119/Downloads/Software Reliability/SRCoursework1Tests_20/followup/bench_13462.smt2_45.cnf: Abnormal termination for initial test (return code -9):
+b''
+/homes/by119/Downloads/Software Reliability/SRCoursework1Tests_20/selected_small/bench_379.smt2.cnf: Timeout for initial test
+/homes/by119/Downloads/Software Reliability/SRCoursework1Tests_20/selected_small/bench_6115.smt2.cnf: Timeout for initial test
+/homes/by119/Downloads/Software Reliability/SRCoursework1Tests_20/selected_small/bench_8669.smt2.cnf: Abnormal termination for initial test (return code -9):
+b''
+/homes/by119/Downloads/Software Reliability/SRCoursework1Tests_20/selected_small/bench_14241.smt2.cnf: Abnormal termination for initial test (return code -9):
+b''
+/homes/by119/Downloads/Software Reliability/SRCoursework1Tests_20/selected_small/bench_3477.smt2.cnf: Timeout for initial test
+/homes/by119/Downloads/Software Reliability/SRCoursework1Tests_20/selected_small/bench_17600.smt2.cnf: Abnormal termination for initial test (return code -9):
+b''
+/homes/by119/Downloads/Software Reliability/SRCoursework1Tests_20/selected_small/bench_15948.smt2.cnf: Timeout for initial test
+/homes/by119/Downloads/Software Reliability/SRCoursework1Tests_20/selected_small/bench_6695.smt2.cnf: Timeout for initial test
+/homes/by119/Downloads/Software Reliability/SRCoursework1Tests_20/selected_small/bench_17289.smt2.cnf: Abnormal termination for initial test (return code -9):
+b''
+/homes/by119/Downloads/Software Reliability/SRCoursework1Tests_20/selected_small/bench_764.smt2.cnf: Timeout for initial test
+/homes/by119/Downloads/Software Reliability/SRCoursework1Tests_20/selected_small/bench_11345.smt2.cnf: Timeout for initial test
+/homes/by119/Downloads/Software Reliability/SRCoursework1Tests_20/selected_small/bench_17509.smt2.cnf: Abnormal termination for initial test (return code -9):
+b''
+/homes/by119/Downloads/Software Reliability/SRCoursework1Tests_20/selected_small/bench_5074.smt2.cnf: Timeout for initial test
+/homes/by119/Downloads/Software Reliability/SRCoursework1Tests_20/selected_small/bench_6078.smt2.cnf: Timeout for initial test
+/homes/by119/Downloads/Software Reliability/SRCoursework1Tests_20/selected_small/bench_14226.smt2.cnf: Abnormal termination for initial test (return code -9):
+b''
+/homes/by119/Downloads/Software Reliability/SRCoursework1Tests_20/selected_small/bench_12565.smt2.cnf: Timeout for initial test
+/homes/by119/Downloads/Software Reliability/SRCoursework1Tests_20/selected_small/bench_14388.smt2.cnf: Abnormal termination for initial test (return code -9):
+b''
+No executable lines

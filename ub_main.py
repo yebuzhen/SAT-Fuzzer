@@ -94,10 +94,10 @@ def execute():
     if not os.path.exists(OUTPUT_PATH):
         os.mkdir(OUTPUT_PATH)
 
-    for i in range(100):
+    for i in range(300):
         print("\nIteration{}".format(i))
-        if i <= 5:
-            create_trash_input(args.sut_path, i)
+        if i < 4:
+            create_trash_input(args.SUT_PATH, i)
         else:
             create_input(args.SUT_PATH)
         task = subprocess.Popen([RUN_PATH, INUPT_PATH], stdout=subprocess.PIPE, stderr=subprocess.PIPE,
@@ -107,19 +107,22 @@ def execute():
             t_output, t_error = task.communicate(timeout=20)
         except subprocess.TimeoutExpired:
             task.kill()
-            t_output, t_error = task.communicate()
+            continue
 
         # os.system(args.SUT_PATH + "/runsat.sh " + args.SUT_PATH +
         #           "/tmp.cnf " + "> " + args.SUT_PATH + "/tmp.log 2>&1")
 
         flag = eval_case(t_error)
-        if flag != -1:
+        if flag >= 0:
             print("Replacing Case ", flag)
             copyfile(INUPT_PATH, CASE_PATH+"/test_case{}".format(flag))
-            with open(ERR_PATH+"/test_log{}".format(flag), 'w') as f:
-                f.writelines(t_error.decode('ascii'))
-            with open(OUTPUT_PATH+"/test_output{}".format(flag), 'w') as f:
-                f.writelines(t_output.decode('ascii'))
+            try:
+                with open(ERR_PATH+"/test_log{}".format(flag), 'w') as f:
+                    f.writelines(t_error.decode('ascii'))
+                with open(OUTPUT_PATH+"/test_output{}".format(flag), 'w') as f:
+                    f.writelines(t_output.decode('ascii'))
+            except UnicodeDecodeError as _:
+                pass
 
         # os.system(args.SUT_PATH + "/runsat.sh " + args.SUT_PATH +
         #           "/tmp.cnf " + "> " + args.SUT_PATH + "/fuzzed-tests/test_log{} 2>&1".format(i))
