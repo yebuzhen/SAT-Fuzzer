@@ -1,4 +1,6 @@
+import argparse
 import random
+import os
 
 UNCHANGE = 'SAT->SAT\nUNSAT->UNSAT\n'
 UNSAT_UNKNOWN = 'SAT->SAT\nUNSAT->UNKNOWN\n'
@@ -42,6 +44,8 @@ def generate_follow_up_tests_and_expectation_files(no_of_var, data):
     for i in range(43, 49):
         new_data = delete_clause(swap_internal_clauses(swap_between_clauses(data)))
         result.append((new_data, no_of_var, len(new_data), UNSAT_UNKNOWN))
+
+    return result
 
 
 def swap_between_clauses(data):
@@ -97,4 +101,25 @@ def delete_clause(data):
 
     return data
 
+
+def parse_args():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("inputs_path",  type=str)
+    parser.add_argument("outputs_path", type=str)
+    return parser.parse_args()
+
+
+if __name__ == "__main__":
+    args = parse_args()
+
+    input_directory = os.fsdecode(args.inputs_path)
+
+    for file in os.listdir(input_directory):
+        filename = os.fsdecode(file)
+        if filename.endswith(".cnf"):
+            with open(filename, 'r') as target_file:
+                data = target_file.readlines()
+                strings = data[0].split(' ')
+                no_of_var = int(strings[2])
+                del data[0]
 

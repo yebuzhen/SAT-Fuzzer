@@ -3,13 +3,14 @@ import random
 import string
 import sys
 
+
 def RandomStringGenerator(length):
-    res = ''.join(random.choices(string.ascii_uppercase + string.digits, k = length))
+    res = ''.join(random.choices(string.ascii_uppercase + string.digits, k=length))
     return res
+
 
 # Read and edit a file
 def create_input(filename, sut_path):
-
     with open(filename, 'r') as file:
         data = file.readlines()
         mark = random.randint(2, 3)
@@ -67,7 +68,7 @@ def combine(digits):
 # generate cnf txt with valid format but random number between 5 - 950
 def generate_random_number_cnf():
     print("Generating random cnf file")
-    variable = random.randint(10,500)
+    variable = random.randint(10, 500)
     clause = random.randint(10, 1000)
     txt = ['p cnf ' + str(variable) + " " + str(clause)]
     percent = random.uniform(0.1, 0.9)
@@ -82,6 +83,7 @@ def generate_random_number_cnf():
         line += '0'
         txt.append(line)
     return txt
+
 
 # currently unused
 def generate_invalid_cnf():
