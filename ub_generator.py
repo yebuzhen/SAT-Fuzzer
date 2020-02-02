@@ -16,14 +16,14 @@ def random_string_generator(length):
 
 
 # no need filename (same as create_input, you can delete it)
-def create_special_input(sut_path, index):
+def create_trash_input(sut_path, index):
     data = SPECIAL_INPUT[index]
     with open(sut_path + "/tmp.cnf", 'w') as file:
         file.writelines(data)
 
 
 # Read and edit a file
-def create_input(filename, sut_path):
+def create_input(sut_path):
     # with open(filename, 'r') as file:
     #     data = file.readlines()
     #     mark = random.randint(2, 3)

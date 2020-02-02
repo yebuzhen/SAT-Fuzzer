@@ -5,7 +5,7 @@ import string
 import random
 import argparse
 from shutil import copyfile
-from ub_generator import create_input
+from ub_generator import create_input, create_trash_input
 
 REGEXES = {
     0: re.compile('^.*runtime error:.+negation'), # INTMIN_NEGATED
@@ -33,10 +33,8 @@ ub_counters = []
 
 def ParseArgs():
     parser = argparse.ArgumentParser()
-    parser.add_argument("SUT_path",  type=str,
+    parser.add_argument("SUT_PATH",  type=str,
         help="Path to binary containing the system under test.")
-    parser.add_argument("Inputs_path", type=str,
-        help="Path to folder containing input DIMACS-format tests.")
     return parser.parse_args()
 
 def eval_case(error_log):
@@ -83,11 +81,11 @@ def eval_case(error_log):
 
 def execute():
     args = ParseArgs()
-    RUN_PATH = args.SUT_path + "/runsat.sh"
-    INUPT_PATH = args.SUT_path + "/tmp.cnf"
-    CASE_PATH = args.SUT_path + "/fuzzed-tests"
-    ERR_PATH = args.SUT_path + "/fuzzed-tests-logs"
-    OUTPUT_PATH = args.SUT_path + "/fuzzed-tests-outputs"
+    RUN_PATH = args.SUT_PATH + "/runsat.sh"
+    INUPT_PATH = args.SUT_PATH + "/tmp.cnf"
+    CASE_PATH = args.SUT_PATH + "/fuzzed-tests"
+    ERR_PATH = args.SUT_PATH + "/fuzzed-tests-logs"
+    OUTPUT_PATH = args.SUT_PATH + "/fuzzed-tests-outputs"
 
     if not os.path.exists(CASE_PATH):
         os.mkdir(CASE_PATH)
@@ -98,9 +96,12 @@ def execute():
 
     for i in range(100):
         print("\nIteration{}".format(i))
-        create_input(args.Inputs_path + "/bench_13462.smt2.cnf", args.SUT_path)
+        if i <= 5:
+            create_trash_input(args.sut_path, i)
+        else:
+            create_input(args.SUT_PATH)
         task = subprocess.Popen([RUN_PATH, INUPT_PATH], stdout=subprocess.PIPE, stderr=subprocess.PIPE,
-                                  cwd=args.SUT_path)
+                                  cwd=args.SUT_PATH)
 
         try:
             t_output, t_error = task.communicate(timeout=20)
@@ -108,8 +109,8 @@ def execute():
             task.kill()
             t_output, t_error = task.communicate()
 
-        # os.system(args.SUT_path + "/runsat.sh " + args.SUT_path +
-        #           "/tmp.cnf " + "> " + args.SUT_path + "/tmp.log 2>&1")
+        # os.system(args.SUT_PATH + "/runsat.sh " + args.SUT_PATH +
+        #           "/tmp.cnf " + "> " + args.SUT_PATH + "/tmp.log 2>&1")
 
         flag = eval_case(t_error)
         if flag != -1:
@@ -120,8 +121,8 @@ def execute():
             with open(OUTPUT_PATH+"/test_output{}".format(flag), 'w') as f:
                 f.writelines(t_output.decode('ascii'))
 
-        # os.system(args.SUT_path + "/runsat.sh " + args.SUT_path +
-        #           "/tmp.cnf " + "> " + args.SUT_path + "/fuzzed-tests/test_log{} 2>&1".format(i))
+        # os.system(args.SUT_PATH + "/runsat.sh " + args.SUT_PATH +
+        #           "/tmp.cnf " + "> " + args.SUT_PATH + "/fuzzed-tests/test_log{} 2>&1".format(i))
 
 if __name__ == "__main__":
     execute()
