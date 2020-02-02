@@ -129,8 +129,14 @@ if __name__ == "__main__":
         filename = os.fsdecode(file)
         if filename.endswith(".cnf"):
             with open(filename, 'r') as target_file:
+                basename = os.path.basename(filename)[:-4]
                 data = target_file.readlines()
                 strings = data[0].split(' ')
                 no_of_var = int(strings[2])
                 del data[0]
-
+                result = generate_follow_up_tests_and_expectation_files(no_of_var, data)
+                for i in range(50):
+                    with open(args.outputs_path + str(basename + '_' + "{0:0=2d}".format(i) + '.cnf'), 'w') as output_cnf:
+                        output_cnf.writelines(result[i][0])
+                    with open(args.outputs_path + str(basename + '_' + "{0:0=2d}".format(i) + '.txt'), 'w') as output_txt:
+                        output_txt.writelines(result[i][1])

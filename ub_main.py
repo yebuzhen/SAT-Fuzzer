@@ -40,6 +40,7 @@ def ParseArgs():
     return parser.parse_args()
 
 def eval_case(error_log):
+    print("Start evaluation")
     cur_status = [0] * NUM_ERRORS
     cur_counter = [0, 0] # extra "bit" 0 for duplication
     for line in error_log.decode('ascii').split('\n'):
@@ -68,11 +69,11 @@ def eval_case(error_log):
             ub_counters.append(cur_counter)
             return len(ubts_buffer) - 1
         else:
-            for case_i in ub_counters:
-                if not case_i[1]:
-                    ubts_buffer[case_i] = cur_status
-                    ub_counters[case_i] = cur_counter
-                    return case_i
+            for i in range(NUM_TS):
+                if not ub_counters[i][1]:
+                    ubts_buffer[i] = cur_status
+                    ub_counters[i] = cur_counter
+                    return i
                 else:
                     continue
             print("Missing one unique case!")
@@ -96,7 +97,7 @@ def execute():
         os.mkdir(OUTPUT_PATH)
 
     for i in range(100):
-        print("Iteration{}".format(i))
+        print("\nIteration{}".format(i))
         create_input(args.Inputs_path + "/bench_13462.smt2.cnf", args.SUT_path)
         task = subprocess.Popen([RUN_PATH, INUPT_PATH], stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                                   cwd=args.SUT_path)
@@ -111,7 +112,7 @@ def execute():
         #           "/tmp.cnf " + "> " + args.SUT_path + "/tmp.log 2>&1")
 
         flag = eval_case(t_error)
-        if flag:
+        if flag != -1:
             print("Replacing Case ", flag)
             copyfile(INUPT_PATH, CASE_PATH+"/test_case{}".format(flag))
             with open(ERR_PATH+"/test_log{}".format(flag), 'w') as f:
