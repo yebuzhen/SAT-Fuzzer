@@ -8,42 +8,53 @@ SAT_UNKNOWN = 'SAT->UNKNOWN\nUNSAT->UNSAT\n'
 
 
 # data is list of strings (each represents a line in cnf files)
-# return [(data, no_of_var, no_of_clauses, expect_file_content), (), ...]
+# return [(data, expect_file_content), (), ...]
 def generate_follow_up_tests_and_expectation_files(no_of_var, data):
     result = []
     for i in range(0, 3):
         new_data = swap_between_clauses(data)
-        result.append((new_data, no_of_var, len(new_data), UNCHANGE))
+        final_data = ['p cnf ' + str(no_of_var) + ' ' + str(len(new_data)), new_data]
+        result.append((final_data, UNCHANGE))
     for i in range(4, 7):
         new_data = swap_internal_clauses(data)
-        result.append((new_data, no_of_var, len(new_data), UNCHANGE))
+        final_data = ['p cnf ' + str(no_of_var) + ' ' + str(len(new_data)), new_data]
+        result.append((final_data, UNCHANGE))
     for i in range(8, 11):
         new_data = add_clause(no_of_var, data)
-        result.append((new_data, no_of_var, len(new_data), SAT_UNKNOWN))
+        final_data = ['p cnf ' + str(no_of_var) + ' ' + str(len(new_data)), new_data]
+        result.append((final_data, SAT_UNKNOWN))
     for i in range(12, 15):
         new_data = delete_clause(data)
-        result.append((new_data, no_of_var, len(new_data), UNSAT_UNKNOWN))
+        final_data = ['p cnf ' + str(no_of_var) + ' ' + str(len(new_data)), new_data]
+        result.append((final_data, UNSAT_UNKNOWN))
     for i in range(16, 19):
         new_data = swap_between_clauses(swap_internal_clauses(data))
-        result.append((new_data, no_of_var, len(new_data), UNCHANGE))
+        final_data = ['p cnf ' + str(no_of_var) + ' ' + str(len(new_data)), new_data]
+        result.append((final_data, UNCHANGE))
     for i in range(20, 23):
         new_data = add_clause(no_of_var, swap_between_clauses(data))
-        result.append((new_data, no_of_var, len(new_data), SAT_UNKNOWN))
+        final_data = ['p cnf ' + str(no_of_var) + ' ' + str(len(new_data)), new_data]
+        result.append((final_data, SAT_UNKNOWN))
     for i in range(24, 27):
         new_data = delete_clause(swap_between_clauses(data))
-        result.append((new_data, no_of_var, len(new_data), UNSAT_UNKNOWN))
+        final_data = ['p cnf ' + str(no_of_var) + ' ' + str(len(new_data)), new_data]
+        result.append((final_data, UNSAT_UNKNOWN))
     for i in range(28, 31):
         new_data = add_clause(no_of_var, swap_internal_clauses(data))
-        result.append((new_data, no_of_var, len(new_data), SAT_UNKNOWN))
+        final_data = ['p cnf ' + str(no_of_var) + ' ' + str(len(new_data)), new_data]
+        result.append((final_data, SAT_UNKNOWN))
     for i in range(32, 35):
         new_data = delete_clause(swap_internal_clauses(data))
-        result.append((new_data, no_of_var, len(new_data), UNSAT_UNKNOWN))
+        final_data = ['p cnf ' + str(no_of_var) + ' ' + str(len(new_data)), new_data]
+        result.append((final_data, UNSAT_UNKNOWN))
     for i in range(36, 42):
         new_data = add_clause(no_of_var, swap_internal_clauses(swap_between_clauses(data)))
-        result.append((new_data, no_of_var, len(new_data), SAT_UNKNOWN))
+        final_data = ['p cnf ' + str(no_of_var) + ' ' + str(len(new_data)), new_data]
+        result.append((final_data, SAT_UNKNOWN))
     for i in range(43, 49):
         new_data = delete_clause(swap_internal_clauses(swap_between_clauses(data)))
-        result.append((new_data, no_of_var, len(new_data), UNSAT_UNKNOWN))
+        final_data = ['p cnf ' + str(no_of_var) + ' ' + str(len(new_data)), new_data]
+        result.append((final_data, UNSAT_UNKNOWN))
 
     return result
 

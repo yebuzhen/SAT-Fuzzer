@@ -89,13 +89,9 @@ def generate_random_number_cnf():
 def generate_invalid_cnf():
     txt = []
     mark = random.randint(0, 4)
-
-    if mark == 0:
-        txt.append('p cnf 0 0')
-    else:
-        txt.append('p cnf 2 3')
-        for _ in range(0, random.randint(0, 3)):
-            line = RandomStringGenerator(random.randint(5, 10))
-            line += ' 0'
-            txt.append(line)
+    txt.append('p cnf 2 3')
+    for i in range(0, random.randint(0, 3)):
+        line = RandomStringGenerator(random.randint(5, 10))
+        line += ' 0'
+        txt.append(line)
     return txt
