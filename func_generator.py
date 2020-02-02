@@ -97,17 +97,6 @@ def add_clause(no_of_vars, old_data):
     return data
 
 
-# def delete_clause(old_data):
-#     data = old_data.copy()
-#     no_of_clauses = len(data)
-#     times = random.randint(0, no_of_clauses - 1)
-#
-#     for _ in range(times):
-#         del data[random.randint(0, len(data) - 1)]
-#
-#     return data
-
-
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("inputs_path",  type=str)
