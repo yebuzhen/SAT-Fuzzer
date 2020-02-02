@@ -70,10 +70,6 @@ def combine(split_line):
     return line[0 : len(line) - 1]
 
 
-print(swap_internal_clauses(['1 2 3 0', '4 5 6']))
-print(swap_between_clauses(['1 2 3 0', '4 5 6']))
-
-
 def add_clause(no_of_vars, data):
     no_of_clauses = len(data)
     no_of_new_clauses = random.randint(1, no_of_clauses)
