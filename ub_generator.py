@@ -70,7 +70,7 @@ def generate_random_number_cnf():
     print("Generating random cnf file")
     variable = random.randint(10, 500)
     clause = random.randint(10, 1000)
-    txt = ['p cnf ' + str(variable) + " " + str(clause)]
+    txt = ['p cnf ' + str(variable) + " " + str(clause) + '\n']
     percent = random.uniform(0.1, 0.9)
     for _ in range(1, clause):
         line = ''
@@ -80,7 +80,7 @@ def generate_random_number_cnf():
                 line += '-'
             line += str(random.randint(1, int(variable * percent)))
             line += ' '
-        line += '0'
+        line += '0\n'
         txt.append(line)
     return txt
 

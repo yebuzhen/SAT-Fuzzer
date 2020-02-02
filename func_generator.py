@@ -128,7 +128,8 @@ if __name__ == "__main__":
     for file in os.listdir(input_directory):
         filename = os.fsdecode(file)
         if filename.endswith(".cnf"):
-            with open(filename, 'r') as target_file:
+            print(filename)
+            with open(input_directory + '/' + filename, 'r') as target_file:
                 basename = os.path.basename(filename)[:-4]
                 data = target_file.readlines()
                 strings = data[0].split(' ')
