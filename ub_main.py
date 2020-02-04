@@ -104,14 +104,17 @@ def execute():
         else:
             tplt_file = random.choice(os.listdir(args.TPLTS_PATH))
             print("Using {} as the base to mutate".format(tplt_file))
-            create_dimacs_input(args.SUT_PATH, tplt_file)
+            create_dimacs_input(args.SUT_PATH, args.TPLTS_PATH+'/'+tplt_file)
         task = subprocess.Popen([RUN_PATH, INUPT_PATH], stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                                   cwd=args.SUT_PATH)
 
         try:
+            print("SUT is running")
             t_output, t_error = task.communicate(timeout=40)
         except subprocess.TimeoutExpired:
             task.kill()
+            print("SUT process killed")
+            ctr += 1
             continue
 
         # os.system(args.SUT_PATH + "/runsat.sh " + args.SUT_PATH +
