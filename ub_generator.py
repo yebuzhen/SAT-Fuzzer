@@ -38,7 +38,7 @@ def create_dimacs_input(sut_path, template):
         elif which_p < 5:
             line_i = random.randint(0, len(cnf)-1)
             cnf[line_i] = random_line_mutation(
-                cnf[line_i], line_i, cnf[0].split(' ')[2])
+                cnf[line_i], line_i, int(cnf[0].split(' ')[2]))
         else:
             cnf = generate_random_number_cnf()
     with open(sut_path + "/tmp.cnf", 'w') as file:

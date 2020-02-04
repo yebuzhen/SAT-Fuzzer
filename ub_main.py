@@ -110,7 +110,7 @@ def execute():
 
         try:
             print("SUT is running")
-            t_output, t_error = task.communicate(timeout=40)
+            t_output, t_error = task.communicate(timeout=30)
         except subprocess.TimeoutExpired:
             task.kill()
             print("SUT process killed")
