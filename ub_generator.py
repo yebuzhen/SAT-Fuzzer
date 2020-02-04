@@ -3,79 +3,95 @@ import random
 import string
 import sys
 
-SPECIAL_INPUT = ["p cnf 1 1\na! 0\n",
-                 "p cnf 1 1\n394890123456789\n",
-                 "p cnf 10 10\n1 2 -4\n",
-                 "p cnf 1 1\n1 2 3 4 5 6 0\n1 2 3 4 5 6 -7\n"]
+NORM_HEADER = "p cnf 10 10\n"
+OVERFLOW_HEADER = "p cnf " + str(sys.maxsize+1) + ' ' + str(sys.maxsize+1) + '\n'
+RANDOM_HEADER = string.printable
+SPECIAL_INPUT = ["p cnf\n",
+                 OVERFLOW_HEADER,
+                 RANDOM_HEADER,
+                 NORM_HEADER,
+                 NORM_HEADER + string.punctuation + '\n',
+                 NORM_HEADER + string.digits + '\n',
+                 NORM_HEADER + string.printable + '\n']
 
 
-def random_string_generator(length):
-    res = ''.join(random.choices(string.ascii_uppercase + string.digits, k=length))
-    return res
+# def random_string_generator(length):
+#     res = ''.join(random.choices(string.ascii_uppercase + string.digits, k=length))
+#     return res
 
 
 # no need filename (same as create_input, you can delete it)
 def create_trash_input(sut_path, index):
-    data = SPECIAL_INPUT[index]
+    print("Throwing rubbish")
+    cnf = SPECIAL_INPUT[index]
     with open(sut_path + "/tmp.cnf", 'w') as file:
-        file.writelines(data)
+        file.writelines(cnf)
 
 
 # Read and edit a file
-def create_input(sut_path):
-    # with open(filename, 'r') as file:
-    #     data = file.readlines()
-    #     mark = random.randint(2, 3)
-    #     if mark == 0:
-    #         data[0] = first_line_mutation(data[0])
-    #     elif mark == 1:
-    #         for _ in range(10):
-    #             line = random.randint(1, len(data))
-    #             data[line] = random_line_mutation(data[line])
-    #     else:
-    #     data = generate_random_number_cnf()
-
-    data = generate_random_number_cnf()
+def create_dimacs_input(sut_path, template):
+    with open(template, 'r') as t:
+        cnf = t.readlines()
+        which_p = random.randint(0, 9)
+        if which_p <= 1:
+            cnf[0] = first_line_mutation(cnf[0])
+        elif which_p < 5:
+            line_i = random.randint(0, len(cnf)-1)
+            cnf[line_i] = random_line_mutation(
+                cnf[line_i], line_i, cnf[0].split(' ')[2])
+        else:
+            cnf = generate_random_number_cnf()
     with open(sut_path + "/tmp.cnf", 'w') as file:
-        file.writelines(data)
+        file.writelines(cnf)
 
 
-# mutate data line
-def random_line_mutation(line):
-    print("Mutating a random line")
+# mutate a random line
+def random_line_mutation(line, which, bdry):
+    print("Mutating line {}".format(which+1))
     digits = line.split(' ')
-    mark = random.randint(0, 1)
-    for i in range(len(digits)):
-        if mark == 0:
-            digits[i] += '000000000000000000'
-        elif mark == 1:
-            digits[i] += 'a'
+    if random.randint(0, 1) == 0:
+        for i in range(len(digits)):
+            if i != len(digits)-1:
+                digits[i] = str(bdry+1)
+    elif random.randint(0, 1) == 0:
+        digits[len(digits)-1] = ''
+    else:
+        digits[len(digits)-1] = string.punctuation
     return combine(digits)
 
 
-# mutate first line
+# mutate the first line
 def first_line_mutation(line):
     print("Mutating the first line")
     digits = line.split(' ')
-    mark = random.randint(1, 4)
-    if mark == 1:
-        digits[1] = 'z'
-    elif mark == 2:
-        digits[2] = sys.maxsize
-    elif mark == 3:
-        digits[3] = sys.maxsize
-    elif mark == 4:
-        res = random_string_generator(random.randint(0, 100))
-        return res
+    if random.randint(2,3) == 2:
+        if random.randint(0,1) == 1:
+            digits[2] = str(int(digits[2])+1)
+        else:
+            digits[2] = str(int(digits[2])-1)
+    else:
+        if random.randint(0, 1) == 1:
+            digits[3] = str(int(digits[3])+1)
+        else:
+            digits[3] = str(int(digits[3])-1)
     return combine(digits)
 
 
-# combine str list to str
+# combine str list to a line
 def combine(digits):
     line = ''
-    for digit in digits:
-        line += str(digit) + ' '
-    return line[0: len(line) - 1]
+    for i in range(len(digits)):
+        if i == len(digits) - 1:
+            if not len(digits[i]):
+                line += '\n'
+            elif digits[i][len(digits[i])-1] != '\n':
+                line += str(digits[i]) + '\n'
+            else:
+                line += str(digits[i])
+        else:
+            line += str(digits[i]) + ' '
+
+    return line
 
 
 # generate cnf txt with valid format but random number between 5 - 950
@@ -98,11 +114,13 @@ def generate_random_number_cnf():
     return txt
 
 
-# currently unused
-def generate_invalid_cnf():
-    txt = ['p cnf 2 3']
-    for i in range(3):
-        line = random_string_generator(random.randint(5, 10))
-        line += ' 0'
-        txt.append(line)
-    return txt
+# for testing
+if __name__ == "__main__":
+    with open("./sample.cnf", 'r') as file:
+        cnf = file.readlines()
+        print(cnf[0].split(' ')[2])
+        # cnf[0] = first_line_mutation(cnf[0])
+        # cnf[11] = random_line_mutation(cnf[11], 11, 50)
+
+    with open("./tmp.cnf", 'w') as file:
+        file.writelines(cnf)

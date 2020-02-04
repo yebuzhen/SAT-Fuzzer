@@ -5,7 +5,7 @@ import string
 import random
 import argparse
 from shutil import copyfile
-from ub_generator import create_input, create_trash_input
+from ub_generator import create_trash_input, create_dimacs_input
 
 REGEXES = {
     0: re.compile('^.*runtime error:.+negation'), # INTMIN_NEGATED
@@ -35,6 +35,8 @@ def ParseArgs():
     parser = argparse.ArgumentParser()
     parser.add_argument("SUT_PATH",  type=str,
         help="Path to binary containing the system under test.")
+    parser.add_argument("TPLTS_PATH", type=str,
+        help="Path to a directory containing a non-empty set of well-fromed DIMACS-format files")
     return parser.parse_args()
 
 def eval_case(error_log):
@@ -94,17 +96,20 @@ def execute():
     if not os.path.exists(OUTPUT_PATH):
         os.mkdir(OUTPUT_PATH)
 
-    for i in range(300):
-        print("\nIteration{}".format(i))
-        if i < 4:
-            create_trash_input(args.SUT_PATH, i)
+    ctr = 0
+    while True:
+        print("\nIteration{}".format(ctr))
+        if ctr < 7:
+            create_trash_input(args.SUT_PATH, ctr)
         else:
-            create_input(args.SUT_PATH)
+            tplt_file = random.choice(os.listdir(args.TPLTS_PATH))
+            print("Using {} as the base to mutate".format(tplt_file))
+            create_dimacs_input(args.SUT_PATH, tplt_file)
         task = subprocess.Popen([RUN_PATH, INUPT_PATH], stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                                   cwd=args.SUT_PATH)
 
         try:
-            t_output, t_error = task.communicate(timeout=20)
+            t_output, t_error = task.communicate(timeout=40)
         except subprocess.TimeoutExpired:
             task.kill()
             continue
@@ -126,6 +131,8 @@ def execute():
 
         # os.system(args.SUT_PATH + "/runsat.sh " + args.SUT_PATH +
         #           "/tmp.cnf " + "> " + args.SUT_PATH + "/fuzzed-tests/test_log{} 2>&1".format(i))
+
+        ctr += 1
 
 if __name__ == "__main__":
     execute()
