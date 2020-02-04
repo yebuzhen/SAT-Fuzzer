@@ -12,54 +12,50 @@ ALL_UN_SAT = 'SAT->UNSAT\nUNSAT->UNSAT\n'
 # return [(data, expect_file_content), (), ...]
 def generate_follow_up_tests_and_expectation_files(no_of_var, data):
     result = []
-    for i in range(0, 7):
+    for i in range(0, 6):
         new_data = swap_between_clauses(data)
         new_data.insert(0, 'p cnf ' + str(no_of_var) + ' ' + str(len(new_data)) + '\n')
         result.append((new_data, UNCHANGED))
-    for i in range(7, 14):
+    for i in range(6, 12):
         new_data = swap_internal_clauses(data)
         new_data.insert(0, 'p cnf ' + str(no_of_var) + ' ' + str(len(new_data)) + '\n')
         result.append((new_data, UNCHANGED))
-    for i in range(14, 21):
+    for i in range(12, 18):
         new_data = add_clause(no_of_var, data)
         new_data.insert(0, 'p cnf ' + str(no_of_var) + ' ' + str(len(new_data)) + '\n')
         result.append((new_data, SAT_UNKNOWN))
-    for i in range(21, 22):
+    for i in range(18, 19):
         new_data = add_trivial_sat_clause(no_of_var, data)
         new_data.insert(0, 'p cnf ' + str(no_of_var + 1) + ' ' + str(len(new_data)) + '\n')
         result.append((new_data, UNCHANGED))
-    for i in range(22, 23):
+    for i in range(19, 20):
         new_data = add_trivial_un_sat_clause(no_of_var, data)
         new_data.insert(0, 'p cnf ' + str(no_of_var + 1) + ' ' + str(len(new_data)) + '\n')
         result.append((new_data, ALL_UN_SAT))
-    for i in range(23, 30):
+    for i in range(20, 26):
         new_data = swap_between_clauses(swap_internal_clauses(data))
         new_data.insert(0, 'p cnf ' + str(no_of_var) + ' ' + str(len(new_data)) + '\n')
         result.append((new_data, UNCHANGED))
-    for i in range(30, 37):
+    for i in range(26, 32):
         new_data = swap_between_clauses(add_clause(no_of_var, data))
         new_data.insert(0, 'p cnf ' + str(no_of_var) + ' ' + str(len(new_data)) + '\n')
         result.append((new_data, SAT_UNKNOWN))
-    for i in range(37, 42):
+    for i in range(32, 38):
         new_data = swap_internal_clauses(add_clause(no_of_var, data))
         new_data.insert(0, 'p cnf ' + str(no_of_var) + ' ' + str(len(new_data)) + '\n')
         result.append((new_data, SAT_UNKNOWN))
-    for i in range(42, 44):
+    for i in range(38, 44):
         new_data = add_clause(no_of_var, swap_internal_clauses(swap_between_clauses(data)))
         new_data.insert(0, 'p cnf ' + str(no_of_var) + ' ' + str(len(new_data)) + '\n')
         result.append((new_data, SAT_UNKNOWN))
-    for i in range(44, 46):
-        new_data = swap_internal_clauses(swap_between_clauses(add_clause(no_of_var, data)))
+    for i in range(44, 47):
+        new_data = add_trivial_sat_clause(no_of_var, swap_internal_clauses(swap_between_clauses(data)))
         new_data.insert(0, 'p cnf ' + str(no_of_var) + ' ' + str(len(new_data)) + '\n')
         result.append((new_data, SAT_UNKNOWN))
-    for i in range(46, 48):
-        new_data = swap_between_clauses(add_trivial_sat_clause(no_of_var, data))
+    for i in range(47, 50):
+        new_data = add_trivial_un_sat_clause(no_of_var, swap_internal_clauses(swap_between_clauses(data)))
         new_data.insert(0, 'p cnf ' + str(no_of_var + 1) + ' ' + str(len(new_data)) + '\n')
         result.append((new_data, UNCHANGED))
-    for i in range(48, 50):
-        new_data = swap_between_clauses(add_trivial_un_sat_clause(no_of_var, data))
-        new_data.insert(0, 'p cnf ' + str(no_of_var + 1) + ' ' + str(len(new_data)) + '\n')
-        result.append((new_data, ALL_UN_SAT))
     return result
 
 
