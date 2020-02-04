@@ -49,19 +49,26 @@ def eval_case(error_log):
                 cur_status[index] = 1
                 cur_counter[0] += 1
 
+    if cur_status == [0] * NUM_ERRORS:
+        print("No error info logged")
+        return -1
+
     try:
-        dup_index = ubts_buffer.index(cur_status)
+        dup_indices = [i for i, x in enumerate(ubts_buffer) if x == cur_status]
         if len(ubts_buffer) < NUM_TS:
             ubts_buffer.append(cur_status)
             ub_counters.append(cur_counter)
             return len(ubts_buffer) - 1
         else:
-            if ub_counters[dup_index][0] < cur_counter[0]:
-                ubts_buffer[dup_index] = cur_status
-                ub_counters[dup_index] = cur_counter
-                return dup_index
-            else:
-                return -1
+            for i in dup_indices:
+                if ub_counters[i][0] < cur_counter[0]:
+                    ubts_buffer[i] = cur_status
+                    if len(dup_indices) == 1:
+                        cur_counter[1] = 1
+                    ub_counters[i] = cur_counter
+                    return i
+                else:
+                    return -1
     except ValueError as _:
         cur_counter[1] = 1
         if len(ubts_buffer) < NUM_TS:
