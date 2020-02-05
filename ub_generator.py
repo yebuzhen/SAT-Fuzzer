@@ -6,12 +6,12 @@ import sys
 NORM_HEADER = "p cnf 10 10\n"
 OVERFLOW_HEADER = "p cnf " + str(sys.maxsize+1) + ' ' + str(sys.maxsize+1) + '\n'
 RANDOM_HEADER = string.printable
-SPECIAL_INPUT = ["p cnf\n",
+SPECIAL_INPUT = ["",
+                 "p cnf\n",
                  OVERFLOW_HEADER,
                  RANDOM_HEADER,
                  NORM_HEADER,
                  NORM_HEADER + string.punctuation + '\n',
-                 NORM_HEADER + string.digits + '\n',
                  NORM_HEADER + string.printable + '\n']
 
 
@@ -33,10 +33,10 @@ def create_dimacs_input(sut_path, template):
     with open(template, 'r') as t:
         cnf = t.readlines()
         which_p = random.randint(0, 9)
-        if which_p <= 1:
+        if which_p < 1:
             cnf[0] = first_line_mutation(cnf[0])
-        elif which_p < 5:
-            line_i = random.randint(0, len(cnf)-1)
+        elif which_p < 7:
+            line_i = random.randint(1, len(cnf)-1)
             cnf[line_i] = random_line_mutation(
                 cnf[line_i], line_i, int(cnf[0].split(' ')[2]))
         else:
@@ -52,10 +52,13 @@ def random_line_mutation(line, which, bdry):
     if random.randint(0, 1) == 0:
         for i in range(len(digits)):
             if i != len(digits)-1:
-                if random.randint(0, 4) == 4:
+                which = random.randint(0, 2)
+                if which == 2:
                     digits[i] = str(sys.maxsize+1)
-                else:
+                elif which == 1:
                     digits[i] = str(bdry+1)
+                else:
+                    digits[i] = string.punctuation[random.randint(0, len(string.punctuation)-1)]
     elif random.randint(0, 1) == 0:
         digits[len(digits)-1] = ''
     else:
