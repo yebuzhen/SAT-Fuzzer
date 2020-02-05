@@ -52,7 +52,10 @@ def random_line_mutation(line, which, bdry):
     if random.randint(0, 1) == 0:
         for i in range(len(digits)):
             if i != len(digits)-1:
-                digits[i] = str(bdry+1)
+                if random.randint(0, 4) == 4:
+                    digits[i] = str(sys.maxsize+1)
+                else:
+                    digits[i] = str(bdry+1)
     elif random.randint(0, 1) == 0:
         digits[len(digits)-1] = ''
     else:
@@ -101,7 +104,7 @@ def generate_random_number_cnf():
     clause = random.randint(40, 100)
     txt = ['p cnf ' + str(variable) + " " + str(clause) + '\n']
     percent = random.uniform(0.1, 0.9)
-    for i in range(1, clause):
+    for _ in range(1, clause):
         line = ''
         for _ in range(1, random.randint(1, variable)):
             mark = random.randint(0, 1)

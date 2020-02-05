@@ -11,7 +11,7 @@ REGEXES = {
     0: re.compile('^.*runtime error:.+negation'), # INTMIN_NEGATED
     1: re.compile('^.*runtime error:.+null pointer'), # NULLPOINTER
     2: re.compile('^.*runtime error:.+shift'),  # SHIFT_ERROR
-    3: re.compile('^.*runtime error:.+signed integer'), # SIGNED_INTEGER_OVERFLOW
+    3: re.compile('^.*runtime error:.+integer'), # INTEGER_OVERFLOW
     4: re.compile('.*runtime error:'), # OTHER_ERROE
 
     5: re.compile('^==.*AddressSanitizer: heap-use-after-free'), # USE_AFTER_FREE
@@ -20,7 +20,7 @@ REGEXES = {
     8: re.compile('^==.*AddressSanitizer: global-buffer-overflow'), # GLOBAL_BUFFER_OVERFLOW
     9: re.compile('^==.*AddressSanitizer: stack-use-after-return'), # USE_AFTER_RETURN
     10: re.compile('^==.*AddressSanitizer: stack-use-after-scope'), # USE_AFTER_SCOPE
-    11: re.compile('^==.*AddressSanitizer: initialization-order-fiasco'), # INITIALIZATION_ORDER_BUGS
+    11: re.compile('^==.*AddressSanitizer failed to'), # for overflowed integers
     12: re.compile('^==.*LeakSanitizer: detected memory leaks'), # MEMORY_LEAKS
 
     13: re.compile('^==.*UndefinedBehaviorSanitizer'), # UB_ERROR
