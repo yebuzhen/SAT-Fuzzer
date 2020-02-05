@@ -56,7 +56,7 @@ def generate_follow_up_tests_and_expectation_files(no_of_var, data):
     for i in range(47, 50):
         new_data = add_trivial_un_sat_clause(no_of_var, swap_internal_clauses(swap_between_clauses(data)))
         new_data.insert(0, 'p cnf ' + str(no_of_var + 1) + ' ' + str(len(new_data)) + '\n')
-        result.append((new_data, UNCHANGED))
+        result.append((new_data, ALL_UN_SAT))
     return result
 
 
