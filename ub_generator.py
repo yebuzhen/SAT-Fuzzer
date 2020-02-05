@@ -118,12 +118,12 @@ def generate_random_number_cnf():
 
 
 # for testing
-if __name__ == "__main__":
-    with open("./sample.cnf", 'r') as file:
-        cnf = file.readlines()
-        print(cnf[0].split(' ')[2])
-        # cnf[0] = first_line_mutation(cnf[0])
-        # cnf[11] = random_line_mutation(cnf[11], 11, 50)
-
-    with open("./tmp.cnf", 'w') as file:
-        file.writelines(cnf)
+# if __name__ == "__main__":
+#     with open("./sample.cnf", 'r') as file:
+#         cnf = file.readlines()
+#         print(cnf[0].split(' ')[2])
+#         # cnf[0] = first_line_mutation(cnf[0])
+#         # cnf[11] = random_line_mutation(cnf[11], 11, 50)
+#
+#     with open("./tmp.cnf", 'w') as file:
+#         file.writelines(cnf)

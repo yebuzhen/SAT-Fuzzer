@@ -1,6 +1,7 @@
 import argparse
 import random
 import os
+from pathlib import Path
 
 UNCHANGED = 'SAT->SAT\nUNSAT->UNSAT\n'
 # UN_SAT_UNKNOWN = 'SAT->SAT\nUNSAT->UNKNOWN\n'
@@ -124,8 +125,8 @@ def add_trivial_un_sat_clause(no_of_vars, old_data):
 
 def parse_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument("inputs_path",  type=str)
-    parser.add_argument("outputs_path", type=str)
+    parser.add_argument("SUT_path",  type=str)
+    parser.add_argument("inputs_path", type=str)
     return parser.parse_args()
 
 
@@ -133,6 +134,7 @@ def execute():
     args = parse_args()
 
     input_directory = os.fsdecode(args.inputs_path)
+    Path(args.inputs_path + '/follow-up-tests').mkdir(parents=True, exist_ok=True)
 
     for file in os.listdir(input_directory):
         filename = os.fsdecode(file)
@@ -147,10 +149,10 @@ def execute():
                 result = generate_follow_up_tests_and_expectation_files(no_of_var, data)
                 for i in range(50):
                     cnf, txt = result[i]
-                    with open(args.outputs_path + '/' + str(basename + '_' + "{0:0=2d}".format(i) + '.cnf'),
+                    with open(args.inputs_path + '/follow-up-tests/' + str(basename + '_' + "{0:0=2d}".format(i) + '.cnf'),
                               'w') as output_cnf:
                         output_cnf.writelines(cnf)
-                    with open(args.outputs_path + '/' + str(basename + '_' + "{0:0=2d}".format(i) + '.txt'),
+                    with open(args.inputs_path + '/follow-up-tests/' + str(basename + '_' + "{0:0=2d}".format(i) + '.txt'),
                               'w') as output_txt:
                         output_txt.writelines(txt)
 
